@@ -9,6 +9,7 @@ const cors = require("cors");
 // config
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static("uploads"));
 
 // routes
 const authRoutes = require("./routes/authRoutes");

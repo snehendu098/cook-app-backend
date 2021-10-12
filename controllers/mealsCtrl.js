@@ -2,6 +2,8 @@ const Meals = require("../models/Meals");
 
 const mealsCtrl = {
   create: async (req, res) => {
+    console.log(req.file);
+
     const {
       name,
       description,
@@ -12,11 +14,15 @@ const mealsCtrl = {
       steps,
     } = req.body;
     try {
+      const check = await Meals.findOne({ name });
+
       if (req.user.role === 0) {
         return res.status(400).json({ msg: "Access denied" });
       }
 
-      const check = await Meals.findOne({ name });
+      if (!req.file) {
+        return res.status(400).json({ msg: "Image is needed" });
+      }
 
       if (check) {
         return res.status(400).json({ msg: "One has already been created" });
@@ -30,6 +36,7 @@ const mealsCtrl = {
         meatIncluded,
         materials,
         steps,
+        productImage: req.file.path,
       });
 
       const savedMeals = await uploadMeals.save();
@@ -64,6 +71,12 @@ const mealsCtrl = {
         steps,
       } = req.body;
 
+      let productImage;
+
+      if (req.file) {
+        productImage = req.file.path;
+      }
+
       let meal = await Meals.findById(req.params.id);
 
       if (!meal) {
@@ -79,7 +92,8 @@ const mealsCtrl = {
         nonVeg ||
         meatIncluded ||
         materials ||
-        steps
+        steps ||
+        productImage
       ) {
         newMeal.name = name;
         newMeal.description = description;
@@ -88,6 +102,7 @@ const mealsCtrl = {
         newMeal.meatIncluded = meatIncluded;
         newMeal.materials = materials;
         newMeal.steps = steps;
+        newMeal.productImage = productImage;
       }
 
       meal = await Meals.findByIdAndUpdate(

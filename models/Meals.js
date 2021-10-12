@@ -31,6 +31,10 @@ const Meals = new Schema(
       type: Array,
       default: [],
     },
+    productImage: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
