@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const Meals = new Schema(
@@ -12,7 +12,8 @@ const Meals = new Schema(
       required: true,
     },
     category: {
-      type: mongoose.Types.ObjectId(),
+      type: String,
+      ref: "category",
     },
     nonVeg: {
       type: Boolean,

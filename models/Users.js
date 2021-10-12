@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -16,8 +16,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    orders: {
-      type: Array,
+    role: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
