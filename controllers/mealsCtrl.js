@@ -36,7 +36,7 @@ const mealsCtrl = {
         meatIncluded,
         materials,
         steps,
-        productImage: req.file.path,
+        imageUrl: req.file.filename,
       });
 
       const savedMeals = await uploadMeals.save();
@@ -71,10 +71,10 @@ const mealsCtrl = {
         steps,
       } = req.body;
 
-      let productImage;
+      let imageUrl;
 
       if (req.file) {
-        productImage = req.file.path;
+        imageUrl = req.file.filename;
       }
 
       let meal = await Meals.findById(req.params.id);
@@ -93,7 +93,7 @@ const mealsCtrl = {
         meatIncluded ||
         materials ||
         steps ||
-        productImage
+        imageUrl
       ) {
         newMeal.name = name;
         newMeal.description = description;
@@ -102,7 +102,7 @@ const mealsCtrl = {
         newMeal.meatIncluded = meatIncluded;
         newMeal.materials = materials;
         newMeal.steps = steps;
-        newMeal.productImage = productImage;
+        newMeal.imageUrl = imageUrl;
       }
 
       meal = await Meals.findByIdAndUpdate(
@@ -113,7 +113,7 @@ const mealsCtrl = {
 
       res.status(200).json(meal);
     } catch (e) {
-      return res.status(400).json({ msg: e.message });
+      return res.status(400).json({ msg: e });
     }
   },
 

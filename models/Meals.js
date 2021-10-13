@@ -31,7 +31,7 @@ const Meals = new Schema(
       type: Array,
       default: [],
     },
-    productImage: {
+    imageUrl: {
       type: String,
       required: true,
     },
