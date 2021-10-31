@@ -124,7 +124,7 @@ const mealsCtrl = {
 
     try {
       // find
-      const meal = await Meals.findById(req.params.id);
+      let meal = await Meals.findById(req.params.id);
 
       if (!meal) {
         return res.status(400).json({ msg: "Not found" });

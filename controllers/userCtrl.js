@@ -74,6 +74,22 @@ const userCtrl = {
       return res.status(400).json({ msg: e.message });
     }
   },
+
+  getUser: async (req, res) => {
+    try {
+      const user = req.user;
+      const findUser = await User.findById(user._id);
+      if (!findUser) {
+        return res.status(400).json({ success: false });
+      } else if (findUser.role >= 0) {
+        return res.status(200).json({ success: true });
+      } else {
+        return res.status(400).json({ success: false });
+      }
+    } catch (e) {
+      return res.status(400).json({ msg: e.message });
+    }
+  },
 };
 
 module.exports = userCtrl;

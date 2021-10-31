@@ -24,4 +24,6 @@ router.post(
   userCtrl.login
 );
 
+router.get("/verify", getUser, userCtrl.getUser);
+
 module.exports = router;
